@@ -1,6 +1,6 @@
-$(document).ready(function(){
-  getWeather();
-})
+// $(document).ready(function(){
+//   getWeather();
+// })
 
 function showPicture(){
   // use jQuery ($ is shorthand) to find the div on the page and then change the html
@@ -12,10 +12,46 @@ function showPicture(){
   
 }
 
-function getWeather() {
-  var url = "https://api.openweathermap.org/data/2.5/weather?q=Boston&APPID="+apiKey;
+function getWeather(searchQuery) {
+  var url = "https://api.openweathermap.org/data/2.5/weather?q=" + searchQuery +  "&units=imperial&appid=" + apiKey;
 
+  $(".city").text("");
+  $(".temp").text("");
+  $(".error-message").text("")
+  
   $.ajax(url,{success: function(data){
-    console.log(data);
+    $(".city").text(data.name);
+    $(".temp").text(data.main.temp);
+  }, error: function(error){
+    $(".error-message").text("An error occured")
   }})
+}
+
+function searchWeather(){
+  var searchQuery = $(".search").val();
+  getWeather(searchQuery);
+}
+
+function handleSignIn(){
+  var provider = new firebase.auth.GoogleAuthProvider();
+
+  firebase.auth().signInWithPopup(provider).then(function(result){
+    // This gives you a Google Access Token. You can use it to acces the Google API.
+    var token = result.credential.accessToken;
+
+    // The signed-in user info
+    var user = result.user;
+
+    console.log(user.email);
+  }).catch(function(error){
+    // Handle errors here
+    var errorCode = error.code;
+    var errorMessage = error.message;
+
+    // The email fo the user's account used.
+    var email = error.email;
+
+    // The firebase.auth.AuthCredential type that was used
+    var credential = error.credential;
+  });
 }
