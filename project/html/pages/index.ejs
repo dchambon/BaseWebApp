@@ -13,7 +13,17 @@
   </div>
   
   <div>
-    <button type=button onClick="handleSignIn()">Login</button>
+    <button type="button" onClick="handleSignIn()">Login</button>
+  </div>
+
+  <div>
+    <form onSubmit="handleMessageFormSubmit()" action="#">
+      <p>Title:</p><br>
+      <input id="post-title"><br>
+      <p>Body:</p><br>
+      <textarea id="post-body"></textarea><br>
+      <button>Submit</button>
+    </form>
   </div>
 
   <div>

@@ -57,3 +57,27 @@ function handleSignIn(){
   });
 
 }
+
+function addMessage(postTitle, postBody){
+  var postData = {
+    title: postTitle,
+    body: postBody
+  }
+
+  var database = firebase.database().ref("posts");
+
+  var newPostRef = database.push();
+  newPostRef.set(postData, function(error){
+    if (error){
+
+    } else {
+      window.location.reload();
+    }
+  });
+}
+
+function handleMessageFormSubmit(){
+  var postTitle = $("#post-title").val();
+  var postBody = $("#post-body").val();
+  addMessage(postTitle, postBody);
+}
