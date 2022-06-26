@@ -2,6 +2,10 @@
 //   getWeather();
 // })
 
+$(document).ready(function(){
+   getPosts();
+})
+
 function showPicture(){
   // use jQuery ($ is shorthand) to find the div on the page and then change the html
   // 'rounded-circle' is a bootstrap thing! Check out more here: http://getbootstrap.com/css/
@@ -80,4 +84,16 @@ function handleMessageFormSubmit(){
   var postTitle = $("#post-title").val();
   var postBody = $("#post-body").val();
   addMessage(postTitle, postBody);
+}
+
+function getPosts() {
+  return firebase.database().ref("posts").once('value').then(function(snapshot) {
+    var posts = snapshot.val();
+    console.log(posts);
+
+    for(var postKey in posts) {
+      var post = posts[postKey];
+      $("#post-listing").append("<div>" + post.title + " - " + post.body + "</div>");
+    }
+  })
 }
