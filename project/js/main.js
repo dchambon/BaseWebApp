@@ -35,7 +35,7 @@ function searchWeather(){
 function handleSignIn(){
   var provider = new firebase.auth.GoogleAuthProvider();
 
-  firebase.auth().signInWithPopup(provider).then(function(result){
+  firebase.auth().signInWithPopup(provider).then(function(result) {
     // This gives you a Google Access Token. You can use it to acces the Google API.
     var token = result.credential.accessToken;
 
@@ -43,7 +43,8 @@ function handleSignIn(){
     var user = result.user;
 
     console.log(user.email);
-  }).catch(function(error){
+    
+  }).catch(function(error) {
     // Handle errors here
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -54,4 +55,5 @@ function handleSignIn(){
     // The firebase.auth.AuthCredential type that was used
     var credential = error.credential;
   });
+
 }
